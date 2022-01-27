@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ypl.mapper.EmployeeMapper">
+
+    <select id="queryBean" resultType="com.ypl.pojo.Employee" fetchSize="1" >
+        select * from employee where name like #{name};
+    </select>
+
+    <select id="queryList" resultMap="employeeMap">
+        select * from employee 
+        <where>
+            <if test="name!=null">
+                and name like #{name}
+            </if>
+            <if test="employeeId != null">
+                and employee_id = #{employeeId}
+            </if>
+            <if test="departmentId!=null">
+                and department_id  = #{departmentId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="employeeId" >
+        <!--<selectKey order="BEFORE" keyProperty="employeeId" resultType="int">
+
+        </selectKey>-->
+        insert into employee (name,salary) values(#{name},#{salary})
+    </insert>
+
+    <update id="update">
+        update employee set salary = #{salary} where employee_id = #{employeeId}
+
+    </update>
+
+    <delete id="delete" >
+        delete from employee where employee_id = #{employeeId}
+    </delete>
+
+    <resultMap id="employeeMap" type="com.ypl.pojo.Employee">
+        <id column="employee_id" property="employeeId"/>
+        <result column="name" property="name"/>
+        <result column="salary" property="salary"/>
+        <!--<association property="department" javaType="com.ypl.pojo.Department">
+            <id column="department_id" property="departmentId"/>
+            <result column="name" property="name"/>
+        </association>-->
+        <!--分段查询-->
+        <!--可以延迟查询-->
+        <association property="department" select="com.ypl.mapper.DepartmentMapper.queryBean" column="department_id"/>
+    </resultMap>
+
+
+</mapper>

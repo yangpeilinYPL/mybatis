@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="jdbcConfig.properties"/>
+
+    <settings>
+        <!-- 打印查询语句 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/><!--开启下划线驼峰命名适配，默认关-->
+        <setting name="logImpl" value="STDOUT_LOGGING" /><!--开启日志功能-->
+        <!--<setting name="lazyLoadingEnabled" value="true"/>&lt;!&ndash;开启延迟加载分段查询&ndash;&gt;
+        <setting name="aggressiveLazyLoading" value="false"/>&lt;!&ndash;关闭阻止延迟加载&ndash;&gt;-->
+    </settings>
+
+    <!--类型命名-->
+    <typeAliases>
+        <typeAlias type="com.ypl.pojo.Employee" alias="888"/>
+        <package name="com.ypl"/>
+    </typeAliases>
+
+    <!--类型处理器-->
+    <typeHandlers>
+        <typeHandler handler="com.ypl.handlerimpl.EmployeeHandlerImpl" />
+    </typeHandlers>
+
+    <!--插件-->
+    <!--<plugins>
+        &lt;!&ndash;<plugin interceptor="org.apache.ibatis.executor.Executor"></plugin>
+        <plugin interceptor="org.apache.ibatis.executor.parameter.ParameterHandler"></plugin>
+        <plugin interceptor="org.apache.ibatis.executor.resultset.ResultSetHandler"></plugin>
+        <plugin interceptor="org.apache.ibatis.executor.statement.StatementHandler"></plugin>&ndash;&gt;
+    </plugins>-->
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+
+        <environment id="diyEnvironment">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+
+    <!--对象工厂-->
+<!--    <objectFactory type="">-->
+
+<!--    </objectFactory>-->
+
+
+
+    <!--数据库厂商标识-->
+    <!--<databaseIdProvider type="">
+
+    </databaseIdProvider>-->
+
+    <!--mapper映射器-->
+    <mappers>
+        <mapper resource="mapper/EmployeeMapper.xml"/>
+        <mapper resource="mapper/DepartmentMapper.xml"/>
+    </mappers>
+
+</configuration>
