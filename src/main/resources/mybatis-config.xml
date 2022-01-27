@@ -15,7 +15,7 @@
 
     <!--类型命名-->
     <typeAliases>
-        <typeAlias type="com.ypl.pojo.Employee" alias="888"/>
+        <typeAlias type="com.ypl.pojo.Employee" alias="8888888"/>
         <package name="com.ypl"/>
     </typeAliases>
 
